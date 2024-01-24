@@ -1,0 +1,96 @@
+openapi: 3.0.0
+paths:
+  "/api/v1/users":
+    post:
+      operationId: UsersController_saveUser
+      summary: Create user
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateUserDto"
+      responses:
+        '200':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - users
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/users/{id}":
+    get:
+      operationId: UsersController_readUsers
+      summary: Read users
+      parameters: []
+      responses:
+        '200':
+          description: The list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/UserEntity"
+      tags:
+        - users
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
+        httpMethod: GET
+        type: aws_proxy
+info:
+  title: Aws-Web-Server
+  description: The Aws-Web-Server API
+  version: '1.0'
+  contact: {}
+tags:
+  - name: users
+    description: ''
+servers: []
+components:
+  schemas:
+    CreateUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    UserEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 642ff272f68f2b39a4a6f7df
+          description: User unique identifier
+        email:
+          type: string
+          example: example@gmail.com
+          description: User email url
+        name:
+          type: string
+          example: John Doe
+          description: User name
+        createdAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Date of user creation
