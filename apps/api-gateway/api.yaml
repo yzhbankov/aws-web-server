@@ -1,29 +1,33 @@
 openapi: 3.0.0
 paths:
   "/api/v1/users":
-    options: # OPTIONS method for /api/v1/users
-      summary: CORS pre-flight request
+    options:
       responses:
-        '200':
-          description: Successful CORS pre-flight response
-          content:
-            application/json:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
               schema:
-                type: object
-      tags:
-        - users
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Credentials:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: { }
       x-amazon-apigateway-integration:
         type: mock
-        httpMethod: OPTIONS
-        requestTemplates:
-          application/json: '{"statusCode": 200}'
         responses:
           default:
             statusCode: 200
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: "'*'"
-              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST,GET'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
     post:
       operationId: UsersController_saveUser
       summary: Create user
@@ -54,29 +58,33 @@ paths:
         httpMethod: POST
         type: aws_proxy
   "/api/v1/users/{id}":
-    options: # OPTIONS method for /api/v1/users/{id}
-      summary: CORS pre-flight request
+    options:
       responses:
-        '200':
-          description: Successful CORS pre-flight response
-          content:
-            application/json:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
               schema:
-                type: object
-      tags:
-        - users
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Credentials:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: { }
       x-amazon-apigateway-integration:
         type: mock
-        httpMethod: OPTIONS
-        requestTemplates:
-          application/json: '{"statusCode": 200}'
         responses:
           default:
             statusCode: 200
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: "'*'"
-              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST,GET'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
     get:
       operationId: UsersController_readUsers
       summary: Read users
