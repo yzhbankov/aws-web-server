@@ -12,9 +12,6 @@ paths:
             Access-Control-Allow-Methods:
               schema:
                 type: "string"
-            Access-Control-Allow-Credentials:
-              schema:
-                type: "string"
             Access-Control-Allow-Headers:
               schema:
                 type: "string"
@@ -73,9 +70,6 @@ paths:
             Access-Control-Allow-Methods:
               schema:
                 type: "string"
-            Access-Control-Allow-Credentials:
-              schema:
-                type: "string"
             Access-Control-Allow-Headers:
               schema:
                 type: "string"
@@ -105,6 +99,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserEntity"
+        "403":
+          description: "403 response"
+          content: { }
       x-amazon-apigateway-integration:
         httpMethod: GET
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
