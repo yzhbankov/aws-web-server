@@ -20,14 +20,17 @@ paths:
                 type: "string"
           content: { }
       x-amazon-apigateway-integration:
-        type: mock
         responses:
           default:
             statusCode: 200
             responseParameters:
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: when_no_match
+        type: mock
     post:
       operationId: UsersController_saveUser
       requestBody:
@@ -78,14 +81,17 @@ paths:
                 type: "string"
           content: { }
       x-amazon-apigateway-integration:
-        type: mock
         responses:
           default:
             statusCode: 200
             responseParameters:
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,GET'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: when_no_match
+        type: mock
     get:
       operationId: "UsersController_readUsers"
       responses:
