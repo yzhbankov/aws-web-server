@@ -54,6 +54,7 @@ paths:
           description: "403 response"
           content: { }
       x-amazon-apigateway-integration:
+        httpMethod: POST
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
         passthroughBehavior: when_no_match
         type: aws_proxy
@@ -102,6 +103,7 @@ paths:
           description: "403 response"
           content: { }
       x-amazon-apigateway-integration:
+        httpMethod: POST
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
         passthroughBehavior: when_no_match
         type: aws_proxy
