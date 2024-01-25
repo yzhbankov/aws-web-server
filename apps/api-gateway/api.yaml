@@ -30,32 +30,33 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
     post:
       operationId: UsersController_saveUser
-      summary: Create user
-      parameters: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateUserDto"
+              $ref: "#/components/schemas/CreateUserDto"
+        required: true
       responses:
-        '200':
-          description: Created user
+        "422":
+          description: "422 response"
+          content: { }
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/UserEntity"
-        '403':
-          description: Forbidden.
-        '422':
-          description: Validation error.
-      tags:
-        - users
-      security:
-        - bearer: []
+                $ref: "#/components/schemas/UserEntity"
+        "403":
+          description: "403 response"
+          content: { }
       x-amazon-apigateway-integration:
-        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
         httpMethod: POST
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
+        passthroughBehavior: when_no_match
         type: aws_proxy
   "/api/v1/users/{id}":
     options:
@@ -86,25 +87,22 @@ paths:
               method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
     get:
-      operationId: UsersController_readUsers
-      summary: Read users
-      parameters: []
+      operationId: "UsersController_readUsers"
       responses:
-        '200':
-          description: The list of users
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/UserEntity"
-      tags:
-        - users
-      security:
-        - bearer: []
+                $ref: "#/components/schemas/UserEntity"
       x-amazon-apigateway-integration:
-        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
         httpMethod: GET
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${users_lambda_arn}/invocations
+        passthroughBehavior: when_no_match
         type: aws_proxy
 info:
   title: Aws-Web-Server
