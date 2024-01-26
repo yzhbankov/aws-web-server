@@ -1,13 +1,21 @@
-import { AppRepo } from './models/index.js';
-import { DatabaseClient } from './shared/models/index.js';
-import { router } from './shared/system/index.js';
-import { Controller } from './controller/index.js';
-
-AppRepo.setRepository(new DatabaseClient('prod_aws_web_service_table'));
+export const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods' : 'GET, OPTIONS, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers' : 'Content-Type',
+}
 
 export const handler = async (event) => {
     try {
-        return router(Controller)(event['httpMethod'], event);
+        // implement lambda function logic ...
+        return {
+            statusCode: 200,
+            body: {},
+            headers: {
+                ...defaultHeaders
+
+            }
+        };
     } catch (error) {
         return {
             statusCode: 500,
